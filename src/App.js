@@ -1,5 +1,7 @@
 import './App.css';
 import RoutesList from './RoutesList';
+import { BrowserRouter } from 'react-router-dom';
+import Navigation from "./Navigation.js";
 
 /**
  * Renders the base App component.
@@ -7,13 +9,16 @@ import RoutesList from './RoutesList';
  * State: none
  * Props: none
  * 
- * App -> 
+ * App -> RoutesList
  */
 
 function App() {
   return (
     <div className="App">
-      <RoutesList/>
+      <BrowserRouter>
+        <Navigation />
+        <RoutesList />
+      </BrowserRouter>
     </div>
   );
 }

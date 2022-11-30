@@ -51,14 +51,33 @@ class JoblyApi {
     return res.companies;
   }
 
+  // * Can filter on provided search filters API:
+  // * - minEmployees
+  // * - maxEmployees
+  // * - nameLike (will find case-insensitive, partial matches)
+  // *
+  /**Filter a list of all companies......... */
+  static async getFilteredCompanies(nameLike){  
+    let res = await this.request('companies', {nameLike})
+    return res.companies;
+  }
+
   /**Get a list of all jobs */
   static async getJobs(){
     let res = await this.request(`jobs`);
-    return res.jobs
+    return res.jobs;
   }
 
-
+  // * Can provide search filter in query to API:
+  // * - minSalary
+  // * - hasEquity (true returns only jobs with equity > 0, other values ignored)
+  // * - title (will find case-insensitive, partial matches)
   /**Filter a list of all jobs.............. */
-
-  /**Filter a list of all companies......... */
+  static async getFilteredJobs(title){
+    let res = await this.request('jobs', {title});
+    return res.jobs
+  }
+ 
 }
+
+export default JoblyApi;

@@ -1,5 +1,5 @@
-import {React} from "react";
-import {NavLink,Link} from "react-router-dom";
+import { React } from "react";
+import { NavLink, Link } from "react-router-dom";
 import "./Navigation.css"
 
 /**
@@ -11,12 +11,16 @@ import "./Navigation.css"
  * App -> Navigation
  */
 
-function Navigation(){
-    return(
+function Navigation() {
+    return (
         <nav className="Navigation">
-            <Link to="/">Jobly</Link>
-            <NavLink to="/jobs">Jobs</NavLink>
-            <NavLink to="/companies">Companies</NavLink>
+            <div className="Navigation-homepage-link">
+                <Link to="/">Jobly</Link>
+            </div>
+            <div className="Navigation-data-links">
+                <NavLink to="/jobs">Jobs</NavLink>
+                <NavLink to="/companies">Companies</NavLink>
+            </div>
         </nav>
     )
 }

@@ -2,3 +2,18 @@
     font-weight: bold;
     color: black;
 }
+
+.Navigation-homepage-link{
+    display: inline;
+    margin-left:0px;
+    margin-right:500px;
+}
+
+.Navigation-data-links{
+    display: inline;
+    margin-right:0px;
+}
+
+.Navigation a{
+    margin:20px;
+}

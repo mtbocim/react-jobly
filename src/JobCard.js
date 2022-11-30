@@ -4,6 +4,7 @@
  * State: none
  * Props: jobData as {title, description, salary, equity}
  * 
+ * JobCardList -> JobCard
  */
 
 function JobCard({jobData}){

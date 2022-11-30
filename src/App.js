@@ -1,4 +1,5 @@
 import './App.css';
+import RoutesList from './RoutesList';
 
 /**
  * Renders the base App component.
@@ -12,7 +13,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-
+      <RoutesList/>
     </div>
   );
 }

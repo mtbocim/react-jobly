@@ -6,12 +6,21 @@ import { useState } from "react";
  * State: value of input
  * Props: callback to use upon submit
  * 
+ * Currently rendered by: JobList, CompanyList
  */
 
 function SearchForm({ onSubmit }) {
     const [value, setValue] = useState();
 
+    function handleChange(evt) {
+        const { value } = evt.target;
+        setValue(value);
+    }
 
+    function handleSubmit(evt) {
+        evt.preventDefault();
+        
+    }
 
     return (
         <div className="SearchForm">
@@ -19,6 +28,7 @@ function SearchForm({ onSubmit }) {
                 <input
                     type="text"
                     value={value}
+                    onChange={handleChange}
                     placeholder="Enter search term..."
                 />
                 <button

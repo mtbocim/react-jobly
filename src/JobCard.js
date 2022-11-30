@@ -2,17 +2,18 @@
  * Renders a card containing a job title and its details.
  *
  * State: none
- * Props: jobData as {title, salary, equity, companyHandle}
+ * Props: jobData as {title, salary, equity, companyHandle (optionally defined)}
+ *
  *
  * JobCardList -> JobCard
  */
 
-function JobCard({jobData, displayHandle=true}){
+function JobCard({jobData}){
   return (
     <div className="JobCard">
       <h3>{jobData.title}</h3>
       {
-        displayHandle
+        jobData.companyHandle !== undefined
         && <p>{jobData.companyHandle}</p>
       }
       <p>Salary: {jobData.salary}</p>

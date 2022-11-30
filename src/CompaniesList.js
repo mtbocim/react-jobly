@@ -2,12 +2,16 @@ import { useState, useEffect } from 'react'
 
 import SearchForm from "./SearchForm";
 import JoblyApi from './JoblyAPI';
+import CompanyCard from './CompanyCard';
 
 /**
  * Renders a CompaniesList component
  * 
- * State: isLoaded (bool)
- *        companiesData as [{company, title, description, imageUrl}, ...]
+ * State: companiesPage
+ *          {
+ *              isLoaded: (bool)
+ *              companiesData as [{company, title, description, imageUrl}, ...]
+ *          }
  * 
  * Props: none
  * 
@@ -17,33 +21,36 @@ import JoblyApi from './JoblyAPI';
  */
 
 function CompaniesList() {
-    const [isLoaded, setIsLoaded] = useState({
-        loading: true,
+    const [companiesPage, setCompaniesPage] = useState({
+        isLoading: true,
         companiesData: []
     });
-
+    
+    const {isLoading, companiesData} = companiesPage;
+    //console.log("companiesData>>>>>>>", companiesData);
+    
     useEffect(function fetchCompaniesDataWhenMounted() {
         async function fetchCompaniesData() {
             const companiesResult = await JoblyApi.getCompanies();
-            setIsLoaded((isLoaded) => (
+            setCompaniesPage(
                 {
-                    ...isLoaded,
-                    loading: false,
+                    isLoading: false,
                     companiesData: companiesResult
                 }
-            ));
+            );
         }
         fetchCompaniesData();
-    }, []);
+    }, [isLoading]);
 
-    const [loading, companiesData] = isLoaded;
 
-    if(loading) return <i>Loading...</i>
+    if(isLoading) return <i>Loading...</i>
 
     return (
         <div className="CompaniesList">
             <SearchForm />
-            <p>CompaniesList</p>
+            {companiesData.map((c,idx)=>
+                <CompanyCard key={idx} companyData={c}/>
+            )}
         </div>
     )
 }

@@ -7,12 +7,14 @@
  * JobCardList -> JobCard
  */
 
-function JobCard({jobData}){
-
+function JobCard({jobData, displayHandle=true}){
   return (
     <div className="JobCard">
       <h3>{jobData.title}</h3>
-      <p>{jobData.companyHandle}</p>
+      {
+        displayHandle
+        && <p>{jobData.companyHandle}</p>
+      }
       <p>Salary: {jobData.salary}</p>
       <p>Equity {jobData.equity}</p>
     </div>

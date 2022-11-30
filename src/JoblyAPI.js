@@ -59,6 +59,7 @@ class JoblyApi {
   /**Filter a list of all companies......... */
   static async getFilteredCompanies(nameLike){  
     let res = await this.request('companies', {nameLike})
+    console.log("filtered response = ", res);
     return res.companies;
   }
 

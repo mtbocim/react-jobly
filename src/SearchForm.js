@@ -10,32 +10,29 @@ import { useState } from "react";
  */
 
 function SearchForm({ onSubmit }) {
-    const [value, setValue] = useState();
-
+    const [value, setValue] = useState('');
+    console.log("what is value>>>>>>>>>", value)
     function handleChange(evt) {
         const { value } = evt.target;
         setValue(value);
     }
 
     function handleSubmit(evt) {
+        console.log("Handle submit triggered");
         evt.preventDefault();
-        
+        onSubmit(value);
     }
 
     return (
         <div className="SearchForm">
-            <form>
+            <form onSubmit={handleSubmit}>
                 <input
                     type="text"
                     value={value}
                     onChange={handleChange}
                     placeholder="Enter search term..."
                 />
-                <button
-                    onSubmit={onSubmit}
-                >
-                    Submit
-                </button>
+                <button>Submit</button>
             </form>
         </div>
     )

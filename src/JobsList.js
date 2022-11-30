@@ -1,10 +1,23 @@
+import {useState, useEffect} from 'react';
+import JobCardList from './JobCardList';
+
+import JoblyApi from "./JoblyAPI";
 import SearchForm from "./SearchForm";
 
 /**
  * Renders a JobsList component
  * 
  * State: isLoaded (bool)
- *        jobsData as [{title, description, salary, equity}, ...]
+ *        jobsData as [
+ *                      {
+ *                          title, 
+ *                          description, 
+ *                          salary, 
+ *                          equity, 
+ *                          companyHandle (optional)
+ *                      }, 
+ *                      ...
+ *                    ]
  * Props: none
  * 
  * App -> RoutesList -> JobsList
@@ -13,10 +26,33 @@ import SearchForm from "./SearchForm";
  */
 
 function JobsList(){
+    const [jobsListPage, setJobsListPage] = useState({
+        isLoading:true,
+        jobsListData: []
+    });
+    
+    const {isLoading, jobsListData} = jobsListPage;
+    console.log("jobsListData>>>>>>>>",jobsListData);
+
+    useEffect(function fetchJobsListDataWhenMounted(){
+        async function fetchJobsListData(){
+            const jobsList = await JoblyApi.getJobs();
+            setJobsListPage(
+                {
+                    isLoading: false,
+                    jobsListData: jobsList,
+                }
+            );
+        }
+        fetchJobsListData();
+    }, []);
+
+    if(isLoading) return <i>Loading...</i>
+
     return(
         <div className="JobsList">
             <SearchForm/>
-            <p>JobsList</p>
+            <JobCardList jobs={jobsListData}/>
         </div>
     )
 }

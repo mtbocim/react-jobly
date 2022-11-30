@@ -9,12 +9,12 @@ import JobCard from "./JobCard.js";
  * Currently used by: JobList, CompanyDetail
  */
 
-function JobCardList({jobs, displayHandle=true}){
+function JobCardList({jobs}){
 
   return (
     <div className="JobCardList">
       {jobs.map((j, i) =>
-      <JobCard jobData={j} key={i} displayHandle={displayHandle}/>)}
+      <JobCard jobData={j} key={i}/>)}
     </div>
   )
 }

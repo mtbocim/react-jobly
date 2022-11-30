@@ -9,6 +9,7 @@
  */
 
 function JobCard({jobData}){
+  console.log("jobData=", jobData);
   return (
     <div className="JobCard">
       <h3>{jobData.title}</h3>
@@ -16,7 +17,10 @@ function JobCard({jobData}){
         jobData.companyHandle !== undefined
         && <p>{jobData.companyHandle}</p>
       }
-      <p>Salary: {jobData.salary}</p>
+      {
+        jobData.salary !== null
+        && <p>Salary: {jobData.salary}</p>
+      }
       <p>Equity {jobData.equity}</p>
     </div>
   )

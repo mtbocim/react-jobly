@@ -18,7 +18,7 @@ class JoblyApi {
   //   "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
   //   "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
 
-  static token = ""
+  static token = "";
 
   static async request(endpoint, data = {}, method = "get") {
     console.debug("API Call:", endpoint, data, method);
@@ -59,7 +59,7 @@ class JoblyApi {
   // * - nameLike (will find case-insensitive, partial matches)
   // *
   /**Filter a list of all companies......... */
-  static async getFilteredCompanies(nameLike){  
+  static async getFilteredCompanies(nameLike){
     let res = await this.request('companies', {nameLike})
     console.log("filtered response = ", res);
     return res.companies;
@@ -80,7 +80,7 @@ class JoblyApi {
     let res = await this.request('jobs', {title});
     return res.jobs
   }
- 
+
 }
 
 export default JoblyApi;

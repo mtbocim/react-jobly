@@ -10,20 +10,19 @@ import './JobCard.css'
  * Currently called by: {JobList, CompanyDetail} -> JobCardList -> JobCard
  */
 
-function JobCard({ jobData }) {
-  console.log("jobData=", jobData);
+function JobCard({ title, companyName, salary, equity }) {
   return (
     <div className="JobCard">
-      <h3>{jobData.title}</h3>
+      <h3>{title}</h3>
       {
-        jobData.companyName !== undefined
-        && <p>{jobData.companyName}</p>
+        companyName !== undefined
+        && <p>{companyName}</p>
       }
       {
-        jobData.salary !== null
-        && <p>Salary: {jobData.salary}</p>
+        salary !== null
+        && <p>Salary: {salary}</p>
       }
-      <p>Equity {jobData.equity}</p>
+      <p>Equity {equity}</p>
     </div>
   )
 }

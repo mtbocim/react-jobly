@@ -1,3 +1,16 @@
+.Navigation{
+    height: 40px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.Navigation-homepage-link{
+    width: 100px;
+}
+
+.Navigation-data-links{
+    width: 250px;
+}
 .active{
     font-weight: bold;
     color: black;
@@ -16,4 +29,7 @@
 
 .Navigation a{
     margin:20px;
+    text-decoration: none;
+    font-size: 20px;
+    
 }

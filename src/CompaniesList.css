@@ -1,0 +1,9 @@
+.CompaniesList a{
+    text-decoration: none;
+    color: black;
+}
+
+.CompaniesList a:hover{
+    color:blue;
+    box-shadow: 5px 10px #888888;
+}

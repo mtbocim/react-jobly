@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import SearchForm from "./SearchForm";
 import JoblyApi from './JoblyAPI';
 import CompanyCard from './CompanyCard';
-
+import './CompaniesList.css';
 /**
  * Renders a CompaniesList component
  *

@@ -18,7 +18,6 @@ function CompanyCard({ handle, name, description, logoUrl }) {
         <div
             className="CompanyCard"
         >
-
             <h3>{name}</h3>
             <p>{description}</p>
             {

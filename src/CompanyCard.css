@@ -1,3 +1,6 @@
 .CompanyCard{
-    border: 1px solid black;
+    border: 2px solid black;
+    width: 60vw;
+    margin: 20px auto;
+    padding: 10px;
 }

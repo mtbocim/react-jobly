@@ -5,7 +5,7 @@ import JobCard from "./JobCard.js";
  *
  * State: none
  * Props:
- *    jobs as [{title, salary, equity, companyName (optionally defined)}, ...]
+ *    jobs as [{id, title, salary, equity, companyName (optionally defined)}, ...]
  *
  * Currently used by: JobList, CompanyDetail
  */

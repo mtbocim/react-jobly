@@ -4,13 +4,12 @@ import './JobCard.css'
  * Renders a card containing a job title and its details.
  *
  * State: none
- * Props: jobData as returned by API call
- *    {id, title, salary, equity, companyName (optionally defined)}
+ * Props: title, salary, equity, companyName (optionally defined)
  *
  * Currently called by: {JobList, CompanyDetail} -> JobCardList -> JobCard
  */
 
-function JobCard({ title, companyName, salary, equity }) {
+function JobCard({ title, companyName=undefined, salary, equity }) {
   return (
     <div className="JobCard">
       <h3>{title}</h3>

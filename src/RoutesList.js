@@ -20,6 +20,9 @@ function RoutesList() {
                 <Route path="/companies/:handle" element={<CompanyDetail />} />
                 <Route path="/companies" element={<CompaniesList />} />
                 <Route path="/jobs" element={<JobsList />} />
+                <Route path="/login" element="" />
+                <Route path="/signup" element="" />
+                <Route path="/profile" element="" />
                 <Route path="/" element={<Homepage />} />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>

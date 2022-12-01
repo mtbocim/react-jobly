@@ -10,8 +10,10 @@ import CompanyCard from './CompanyCard';
  * State: companiesPage
  *          {
  *              isLoaded: (bool)
- *              companiesData as [{company, title, description, imageUrl}, ...]
+ *              companiesData as [{company, title, description, logoUrl}, ...]
  *          }
+ * 
+ *        filter: (str representing search term)
  * 
  * Props: none
  * 
@@ -31,7 +33,7 @@ function CompaniesList() {
     const { isLoading, companiesData } = companiesPage;
     console.log("companiesData>>>>>>>", companiesData);
     console.log("filter is >>>>>>>>>>", filter);
-
+    //TODO: name better
     useEffect(function fetchCompaniesDataWhenMounted() {
         async function fetchCompaniesData() {
             const companiesResult = filter === ''
@@ -44,19 +46,22 @@ function CompaniesList() {
                 }
             );
         }
-        fetchCompaniesData();
-    }, [filter]);
-
-    function getFilterForSearch(searchTerm) {
-        console.log('Search term is >>>>>>', searchTerm);
         setCompaniesPage(companiesData => (
             {
                 ...companiesData,
                 isLoading: true,
             }
         ));
+        fetchCompaniesData();
+    }, [filter]);
+
+    function getFilterForSearch(searchTerm) {
+        console.log('Search term is >>>>>>', searchTerm);
         setFilter(searchTerm);
     }
+    // async function searchCompanies(searchTerm){
+
+    // }
 
     if (isLoading) return <i>Loading...</i>
 
@@ -64,8 +69,10 @@ function CompaniesList() {
         <div className="CompaniesList">
             <SearchForm onSubmit={getFilterForSearch} />
             {companiesData.length === 0
-                ? <p>No results found.</p>
+                ? <p>No results found {filter !== '' && `for ${filter}.`}</p>
                 : companiesData.map((c, idx) =>
+                    // TODO: better key definition!! companyHandle should work
+                    // TODO: explicitly pass named props instead of object?
                     <CompanyCard key={idx} companyData={c} />
                 )}
         </div>

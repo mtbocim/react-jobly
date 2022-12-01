@@ -20,6 +20,7 @@ function SearchForm({ onSubmit }) {
     function handleSubmit(evt) {
         console.log("Handle submit triggered");
         evt.preventDefault();
+        //TODO: trim value
         onSubmit(value);
     }
 

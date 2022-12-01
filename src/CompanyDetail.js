@@ -27,7 +27,7 @@ import JobCardList from "./JobCardList.js";
  */
 
 function CompanyDetail(){
-    const params = useParams();
+    const {handle} = useParams();
     //console.log("params =", params)
 
     const [companyDetailPage, setCompanyDetailPage] = useState({
@@ -40,7 +40,7 @@ function CompanyDetail(){
 
     useEffect(function fetchCompanyDataWhenMounted() {
         async function fetchCompanyData() {
-            const companyResult = await JoblyApi.getCompany(params.handle);
+            const companyResult = await JoblyApi.getCompany(handle);
             setCompanyDetailPage(
                 {
                     isLoading: false,
@@ -49,7 +49,7 @@ function CompanyDetail(){
             );
         }
         fetchCompanyData();
-    }, []);
+    }, [handle]);
 
     if(isLoading) return <i>Loading...</i>
 

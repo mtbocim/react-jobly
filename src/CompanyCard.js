@@ -3,29 +3,29 @@ import './CompanyCard.css';
 
 /**
  * Renders a CompanyCard component
- * 
+ *
  * State: none
- * Props: companyData as {handle, name, description, numEmployees, logoUrl}
- * 
+ * Props: handle, name, description, logoUrl
+ *
  * App -> RoutesList -> CompanyList -> CompanyCard
  */
 
-function CompanyCard({ companyData }) {
+function CompanyCard({ handle, name, description, logoUrl }) {
     //console.log("companyData>>>>>>>>", companyData)
 
     return (
-        <Link to={`/companies/${companyData.handle}`}>
-        <div 
+        <Link to={`/companies/${handle}`}>
+        <div
             className="CompanyCard"
         >
-    
-            <h3>{companyData.name}</h3>
-            <p>{companyData.description}</p>
+
+            <h3>{name}</h3>
+            <p>{description}</p>
             {
-                companyData.logoUrl !== null
+                logoUrl !== null
                 && <img
-                    src={companyData.logoUrl}
-                    alt={`${companyData.name} logo`}
+                    src={logoUrl}
+                    alt={`${name} logo`}
                 />
             }
         </div>

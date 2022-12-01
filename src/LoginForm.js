@@ -1,5 +1,6 @@
-import {useContext, useState} from 'react';
+import { useContext, useState } from 'react';
 import userContext from './userContext';
+import AlertMsg from './AlertMsg';
 
 /**
  * Render a Profile component.
@@ -18,26 +19,32 @@ import userContext from './userContext';
  *
  */
 
-function LoginForm({onSubmit}){
+function LoginForm({ onSubmit }) {
     const [formData, setFormData] = useState({
-      username: "",
-      password: ""
+        username: "",
+        password: ""
     });
+    const [errors, setErrors] = useState([]);
 
-    function handleChange(evt){
+    //console.log("login formData", formData);
+
+    function handleChange(evt) {
         const { name, value } = evt.target;
         setFormData((fData) => ({
-          ...fData,
-          [name]: value,
+            ...fData,
+            [name]: value,
         }));
     }
 
-    function handleSubmit(evt){
+    async function handleSubmit(evt) {
         evt.preventDefault();
-        onSubmit(formData);
+        const result = await onSubmit(formData);
+        //console.log("errors =", result)
+        setErrors(()=>result);
     }
 
-    return(
+
+    return (
         <div className='LoginForm'>
             <form onSubmit={handleSubmit}>
                 <label>
@@ -59,6 +66,8 @@ function LoginForm({onSubmit}){
                         name="password"
                     />
                 </label>
+                <AlertMsg msgs={errors} />
+                <button>Login</button>
             </form>
         </div>
     )

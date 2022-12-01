@@ -26,8 +26,8 @@ class JoblyApi {
     const url = `${BASE_URL}/${endpoint}`;
     const headers = { Authorization: `Bearer ${JoblyApi.token}` };
     const params = (method === "get")
-        ? data
-        : {};
+      ? data
+      : {};
 
     try {
       return (await axios({ url, method, data, params, headers })).data;
@@ -59,14 +59,14 @@ class JoblyApi {
   // * - nameLike (will find case-insensitive, partial matches)
   // *
   /**Filter a list of all companies......... */
-  static async getFilteredCompanies(nameLike){
-    let res = await this.request('companies', {nameLike})
+  static async getFilteredCompanies(nameLike) {
+    let res = await this.request('companies', { nameLike })
     console.log("filtered response = ", res);
     return res.companies;
   }
 
   /**Get a list of all jobs */
-  static async getJobs(){
+  static async getJobs() {
     let res = await this.request(`jobs`);
     return res.jobs;
   }
@@ -76,10 +76,31 @@ class JoblyApi {
   // * - hasEquity (true returns only jobs with equity > 0, other values ignored)
   // * - title (will find case-insensitive, partial matches)
   /**Filter a list of all jobs.............. */
-  static async getFilteredJobs(title){
-    let res = await this.request('jobs', {title});
+  static async getFilteredJobs(title) {
+    let res = await this.request('jobs', { title });
     return res.jobs
   }
+
+  //  * Register
+  //  * user must include { username, password, firstName, lastName, email }
+  //  *
+  //  * Returns JWT token which can be used to authenticate further requests.
+  static async registerNewUser(newUserData) {
+    let res = await this.request('/auth/register', { newUserData });
+    this.token = res.token;
+    return res.token;
+  }
+
+  //  * Login  { username, password } => { token }
+  //  *
+  //  * Returns JWT token which can be used to authenticate further requests.
+  static async loginUser(loginData) {
+    let res = await this.request('auth/token', loginData, 'POST');
+    this.token = res.token;
+    return res;
+  }
+
+
 
 }
 

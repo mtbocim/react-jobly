@@ -14,6 +14,8 @@ import SignupForm from "./SignupForm.js";
  * Props: handleLogin, handleSignup, handleProfileEdit
  *
  * App -> RoutesList
+ * 
+ * Accessible routes determined by data in localstorage("token")
  */
 
 function RoutesList({ handleLogin, handleSignup, handleProfileEdit }) {
@@ -21,7 +23,7 @@ function RoutesList({ handleLogin, handleSignup, handleProfileEdit }) {
 
     return (
         <div className="RoutesList">
-            {token !== "null" 
+            {token !== null
                 ?
                 <Routes>
                     <Route path="/companies/:handle" element={<CompanyDetail />} />
@@ -32,7 +34,7 @@ function RoutesList({ handleLogin, handleSignup, handleProfileEdit }) {
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
 
-                : 
+                :
                 <Routes>
                     <Route path="/login" element={<LoginForm onSubmit={handleLogin} />} />
                     <Route path="/signup" element={<SignupForm onSubmit={handleSignup} />} />

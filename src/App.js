@@ -33,15 +33,15 @@ function App() {
 
   /**
    * Every time the token state changes, function runs.
-   * If token is not the empty string, an API call will be made and userInfo
+   * If token is not null, an API call will be made and userInfo
    * will be updated.
-   * If the token is the empty string, userInfo will be set to empty object.
+   * If the token is null, userInfo will be set to empty object.
    */
   useEffect(function handleChangeOfUser() {
     async function fetchUserInfo() {
       console.log("useEffect invoked, token is", token);
       JoblyApi.token = token;
-      if (token !== "null") {
+      if (token !== null) {
         console.log("there is a token, we got here");
         const tokenDecoded = jwt_decode(token);
         console.log("TEST decoded token is>>>>", tokenDecoded);
@@ -51,11 +51,12 @@ function App() {
           const res = await JoblyApi.getUserInfo(username);
           setUserInfo(() => res.user);
         } catch (err) {
-          console.error("API Error:", err.response);
-          let message = err.response.data.error.message;
-          throw Array.isArray(message) ? message : [message];
+          handleLogout();
+          //This happens only in odd circumstances where the server drops
+          //in the moment after a successful login request
+          window.alert("Login failed, please try again");
         }
-      } else if (token === "null") {
+      } else if (token === null) {
         setUserInfo({});
       }
 
@@ -108,7 +109,7 @@ function App() {
    */
 
   function handleLogout() {
-    localStorage.setItem("token", null);
+    localStorage.removeItem("token");
     setToken(localStorage.getItem("token"));
   }
 

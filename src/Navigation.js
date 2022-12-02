@@ -7,8 +7,7 @@ import userContext from "./userContext";
  * Renders a Navigation component
  *
  * State: none
- * Props: username
- *        handleLogout: logout callback function
+ * Props: handleLogout: logout callback function
  *
  * App -> Navigation
  */

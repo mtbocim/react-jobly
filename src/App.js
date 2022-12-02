@@ -20,7 +20,7 @@ import jwt_decode from "jwt-decode";
  *            applications:[]
  *          }
  *
- *         token (str)
+ *         token: (str)
  *
  * Props: none
  *
@@ -29,8 +29,7 @@ import jwt_decode from "jwt-decode";
 
 function App() {
   const [userInfo, setUserInfo] = useState({});
-  const [token, setToken] = useState("");
-
+  const [token, setToken] = useState(localStorage.getItem("token"))
 
   /**
    * Every time the token state changes, function runs.
@@ -38,12 +37,12 @@ function App() {
    * will be updated.
    * If the token is the empty string, userInfo will be set to empty object.
    */
-
   useEffect(function handleChangeOfUser() {
     async function fetchUserInfo() {
       console.log("useEffect invoked, token is", token);
-      if (token !== "") {
-
+      JoblyApi.token = token;
+      if (token !== "null") {
+        console.log("there is a token, we got here");
         const tokenDecoded = jwt_decode(token);
         console.log("TEST decoded token is>>>>", tokenDecoded);
         const { username } = tokenDecoded;
@@ -56,7 +55,7 @@ function App() {
           let message = err.response.data.error.message;
           throw Array.isArray(message) ? message : [message];
         }
-      } else if (token === "") {
+      } else if (token === "null") {
         setUserInfo({});
       }
 
@@ -75,7 +74,8 @@ function App() {
 
   async function handleLogin(formData) {
     const res = await JoblyApi.loginUser(formData);
-    setToken(() => res.token);
+    localStorage.setItem("token", res.token);
+    setToken(localStorage.getItem("token"));
   }
 
   /**
@@ -86,13 +86,13 @@ function App() {
 
   async function handleSignup(formData) {
     const res = await JoblyApi.registerNewUser(formData);
-    setToken(() => res.token);
+    localStorage.setItem("token", res.token);
+    setToken(localStorage.getItem("token"));
   }
 
   /**
-   *  Function called when ProfileEdit form is submitted.
+   *  Function called when ProfileForm data is submitted.
    *  Function calls JoblyApi static method to update user information.
-   *  TODO: finish this
    */
 
   async function handleProfileEdit(formData) {
@@ -108,7 +108,8 @@ function App() {
    */
 
   function handleLogout() {
-    setToken("");
+    localStorage.setItem("token", null);
+    setToken(localStorage.getItem("token"));
   }
 
   return (

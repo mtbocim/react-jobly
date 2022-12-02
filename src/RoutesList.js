@@ -16,20 +16,30 @@ import SignupForm from "./SignupForm.js";
  * App -> RoutesList
  */
 
-function RoutesList({handleLogin, handleSignup, handleProfileEdit}) {
+function RoutesList({ handleLogin, handleSignup, handleProfileEdit }) {
+    const token = localStorage.getItem("token");
+
     return (
         <div className="RoutesList">
-            <Routes>
-                <Route path="/companies/:handle" element={<CompanyDetail />} />
-                <Route path="/companies" element={<CompaniesList />} />
-                <Route path="/jobs" element={<JobsList />} />
-                <Route path="/login" element={<LoginForm onSubmit={handleLogin} />} />
-                {/* <Route path="/logout" /> TODO: Logging out? */}
-                <Route path="/signup" element={<SignupForm onSubmit={handleSignup} />} />
-                <Route path="/profile" element={<ProfileForm onSubmit={handleProfileEdit} />} />
-                <Route path="/" element={<Homepage />} />
-                <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
+            {token !== "null" 
+                ?
+                <Routes>
+                    <Route path="/companies/:handle" element={<CompanyDetail />} />
+                    <Route path="/companies" element={<CompaniesList />} />
+                    <Route path="/jobs" element={<JobsList />} />
+                    <Route path="/profile" element={<ProfileForm onSubmit={handleProfileEdit} />} />
+                    <Route path="/" element={<Homepage />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+
+                : 
+                <Routes>
+                    <Route path="/login" element={<LoginForm onSubmit={handleLogin} />} />
+                    <Route path="/signup" element={<SignupForm onSubmit={handleSignup} />} />
+                    <Route path="/" element={<Homepage />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+            }
         </div>
     )
 }

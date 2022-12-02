@@ -18,7 +18,7 @@ class JoblyApi {
   //   "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
   //   "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
 
-  static token = "";
+  static token = localStorage.getItem("token");
 
   static async request(endpoint, data = {}, method = "get") {
     console.debug("API Call:", endpoint, data, method);
@@ -88,7 +88,6 @@ class JoblyApi {
   //  * Returns JWT token which can be used to authenticate further requests.
   static async registerNewUser(newUserData) {
     let res = await this.request('auth/register', newUserData, 'POST');
-    this.token = res.token;
     return res.token;
   }
 
@@ -97,11 +96,12 @@ class JoblyApi {
   //  * Returns JWT token which can be used to authenticate further requests.
   static async loginUser(loginData) {
     let res = await this.request('auth/token', loginData, 'POST');
-    this.token = res.token;
+    
     return res;
   }
 
   static async getUserInfo(username) {
+    console.log("getUserInfo called with token = ", this.token);
     let res = await this.request(`users/${username}`);
     return res;
   }

@@ -22,6 +22,7 @@ import AlertMsg from './AlertMsg';
 
 function ProfileForm({onSubmit}){
     const userData = useContext(userContext);
+    //console.log("ProfileForm userData", userData);
     const [formData, setFormData] = useState(userData);
     const [errors, setErrors] = useState([]);
     

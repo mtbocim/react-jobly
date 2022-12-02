@@ -1,4 +1,4 @@
-import {useContext} from 'react';
+import { useContext } from 'react';
 import userContext from './userContext';
 
 /**
@@ -10,15 +10,16 @@ import userContext from './userContext';
  * App -> RoutesList -> Homepage
  */
 
-function Homepage(){
-    const userData = useContext(userContext);
-    const isLoggedIn = Object.keys(userData).length !== 0;
-    return(
+function Homepage() {
+    const { firstName } = useContext(userContext);
+    const isLoggedIn = firstName !== undefined
+    
+    return (
         <div className="Homepage">
             <p>Find your future here...</p>
             {
                 isLoggedIn
-                && <p>Welcome back {userData.firstName}!</p>
+                && <p>Welcome back {firstName}!</p>
             }
         </div>
     )

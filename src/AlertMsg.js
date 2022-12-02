@@ -7,14 +7,14 @@
  * Used by: LoginForm, SignupForm, ProfileForm
  */
 
-function AlertMsg({msgs}){
-    return(
+function AlertMsg({ msgs }) {
+    return (
         <div className="AlertMsg">
-            {msgs.map((msg, idx) => 
-                <div 
-                    key={idx} 
+            {msgs.map((msg, idx) =>
+                <div
+                    key={idx}
                     className="AlertMsg-msg">
-                        {msg}
+                    {msg}
                 </div>)}
         </div>
     )

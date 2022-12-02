@@ -1,16 +1,29 @@
-import { useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import userContext from "./userContext.js";
 import './App.css';
 import RoutesList from './RoutesList';
-import { BrowserRouter, Navigate } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Navigation from "./Navigation.js";
 import JoblyApi from './JoblyAPI.js';
 
 /**
  * Renders the base App component.
  *
- * State: userInfo, token
- * TODO: descriptions of these states
+ * State: userInfo:
+ *          {
+ *            username,
+ *            firstName,
+ *            lastName,
+ *            email,
+ *            isAdmin,
+ *            applications:[]
+ *          }
+ * 
+ *         loginInfo:
+ *            {
+ *              token:
+ *              username:
+ *            }
  *
  * Props: none
  *
@@ -20,8 +33,7 @@ import JoblyApi from './JoblyAPI.js';
 function App() {
   const [userInfo, setUserInfo] = useState({});
   const [loginInfo, setLoginInfo] = useState("");
-  
-  const {username, firstName, lastName, email} = userInfo
+
   //console.log("App has rendered with states", "userInfo=", userInfo,
   //  "token=", loginInfo);
 
@@ -30,7 +42,9 @@ function App() {
       //console.log("YOU GOT HERE");
       //TODO: handle logged out user state
 
-      const resUser = await JoblyApi.getUserInfo(loginInfo.username);
+      const resUser = loginInfo.token !== undefined
+        ? await JoblyApi.getUserInfo(loginInfo.username)
+        : { user: {} };
       setUserInfo(() => resUser.user);
       console.log("hallelujah");
     }
@@ -52,21 +66,25 @@ function App() {
   }
 
   async function handleProfileEdit(formData) {
-    //console.log("What is handleProfileEdit formData",formData);
-    const {firstName, lastName, email, username} = formData
-    const res = await JoblyApi.updateUserInfo(username, {firstName, lastName, email});
-    setUserInfo(userInfo=>({...userInfo, ...formData}));
+    const { firstName, lastName, email, username } = formData;
+    const res = await JoblyApi.updateUserInfo(username, { firstName, lastName, email });
+    //console.log("What is handleProfileEdit formData",formData, res);
+    setUserInfo(userInfo => ({ ...userInfo, ...res.user }));
   }
 
   function handleLogout() {
-
+    setLoginInfo({})
   }
 
   return (
-    <userContext.Provider value={{username, firstName, lastName, email}}>
+    <userContext.Provider value={userInfo}>
       <div className="App">
         <BrowserRouter>
-          <Navigation userInfo={userInfo} />
+          <Navigation 
+            username={userInfo.username} 
+            handleLogout={handleLogout} 
+          />
+
           <RoutesList
             handleLogin={handleLogin}
             handleSignup={handleSignup}

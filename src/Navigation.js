@@ -3,16 +3,17 @@ import { NavLink, Link } from "react-router-dom";
 import "./Navigation.css";
 
 /**
- * Renders a navigation component
+ * Renders a Navigation component
  *
  * State: none
- * Props: none
+ * Props: username
+ *        handleLogout: logout callback function
  *
  * App -> Navigation
  */
 
-function Navigation({ userInfo }) {
-    const isLoggedIn = Object.keys(userInfo).length !== 0;
+function Navigation({ username, handleLogout }) {
+    const isLoggedIn = username !== undefined;
 
     return (
         <nav className="Navigation">
@@ -25,7 +26,12 @@ function Navigation({ userInfo }) {
                         <NavLink to="/jobs">Jobs</NavLink>
                         <NavLink to="/companies">Companies</NavLink>
                         <NavLink to="/profile">Profile</NavLink>
-                        <NavLink to="/logout">Logout</NavLink>
+                        <NavLink
+                            to="/logout"
+                            onClick={handleLogout}
+                        >
+                            Logout {username}
+                        </NavLink>
                     </div>
                     : <div className="Navigation-data-links">
                         <NavLink to="/login">Login</NavLink>

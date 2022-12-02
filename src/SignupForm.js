@@ -1,10 +1,10 @@
-import {useContext, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import userContext from './userContext';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import AlertMsg from './AlertMsg';
 
 /**
- * Render a Profile component.
+ * Render a SignupForm component.
  *
  * State: formData
  *          {
@@ -15,29 +15,30 @@ import AlertMsg from './AlertMsg';
  *              password
  *          }
  *
- * Props: handleSubmit
+ * Props: onSubmit
  *
- * App -> RoutesList -> Profile
+ * App -> RoutesList -> SignupForm
  *
  */
 
-function SignupForm({onSubmit}){
+function SignupForm({ onSubmit }) {
     const [formData, setFormData] = useState({
-      username: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: ""
+        username: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: ""
     });
 
     const [errors, setErrors] = useState([]);
+
     const navigate = useNavigate();
 
-    function handleChange(evt){
+    function handleChange(evt) {
         const { name, value } = evt.target;
         setFormData((fData) => ({
-          ...fData,
-          [name]: value,
+            ...fData,
+            [name]: value,
         }));
     }
 
@@ -46,20 +47,20 @@ function SignupForm({onSubmit}){
      *  Calls onSubmit callback fn given as prop
      *  If onSubmit throws an error, it will be displayed on the form
      */
-    async function handleSubmit(evt){
+    async function handleSubmit(evt) {
         evt.preventDefault();
         try {
-          const result = await onSubmit(formData);
-          navigate('/');
-          console.log("success, result is", result);
+            const result = await onSubmit(formData);
+            navigate('/');
+            console.log("success, result is", result);
         }
-        catch(errorMessages) {
-          console.log("err>>>>>>>>>>>>", errorMessages);
-          setErrors(() => errorMessages);
+        catch (errorMessages) {
+            console.log("err>>>>>>>>>>>>", errorMessages);
+            setErrors(() => errorMessages);
         }
     }
 
-    return(
+    return (
         <div className='SignupForm'>
             <form onSubmit={handleSubmit}>
                 <label>

@@ -1,11 +1,11 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import userContext from './userContext';
+
 import AlertMsg from './AlertMsg';
 
 
 /**
- * Render a Profile component.
+ * Render a LoginForm component.
  *
  * State: formData
  *          {
@@ -13,9 +13,9 @@ import AlertMsg from './AlertMsg';
  *              password
  *          }
  *
- * Props: handleSubmit
+ * Props: onSubmit
  *
- * App -> RoutesList -> Profile
+ * App -> RoutesList -> LoginForm
  *
  */
 
@@ -38,13 +38,13 @@ function LoginForm({ onSubmit }) {
     async function handleSubmit(evt) {
         evt.preventDefault();
         try {
-          const result = await onSubmit(formData);
-          navigate('/');
-          console.log("success, result is", result);
+            const result = await onSubmit(formData);
+            navigate('/');
+            console.log("success, result is", result);
         }
-        catch(errorMessages) {
-          console.log("err>>>>>>>>>>>>", errorMessages);
-          setErrors(() => errorMessages);
+        catch (errorMessages) {
+            console.log("err>>>>>>>>>>>>", errorMessages);
+            setErrors(() => errorMessages);
         }
     }
 
@@ -71,6 +71,7 @@ function LoginForm({ onSubmit }) {
                         name="password"
                     />
                 </label>
+
                 <AlertMsg msgs={errors} />
                 <button>Login</button>
             </form>

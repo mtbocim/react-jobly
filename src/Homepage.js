@@ -12,13 +12,14 @@ import userContext from './userContext';
 
 function Homepage() {
     const { firstName } = useContext(userContext);
-    const isLoggedIn = firstName !== undefined
-    
+    const isLoggedIn = firstName !== undefined;
+
     return (
         <div className="Homepage">
             <p>Find your future here...</p>
             {
                 isLoggedIn
+                // TODO: make this a ternary? to display login/signup buttons again?
                 && <p>Welcome back {firstName}!</p>
             }
         </div>

@@ -41,11 +41,12 @@ function App() {
 
   useEffect(function handleChangeOfUser() {
     async function fetchUserInfo() {
-
+      console.log("useEffect invoked, token is", token);
       if (token !== "") {
+
         const tokenDecoded = jwt_decode(token);
-        const { username } = tokenDecoded;
         console.log("TEST decoded token is>>>>", tokenDecoded);
+        const { username } = tokenDecoded;
 
         try {
           const res = await JoblyApi.getUserInfo(username);
@@ -56,7 +57,7 @@ function App() {
           throw Array.isArray(message) ? message : [message];
         }
       } else if (token === "") {
-        setUserInfo(() => { });
+        setUserInfo({});
       }
 
       console.log("hallelujah, useEffect has been invoked");
@@ -74,7 +75,7 @@ function App() {
 
   async function handleLogin(formData) {
     const res = await JoblyApi.loginUser(formData);
-    setToken(() => res);
+    setToken(() => res.token);
   }
 
   /**
@@ -85,7 +86,7 @@ function App() {
 
   async function handleSignup(formData) {
     const res = await JoblyApi.registerNewUser(formData);
-    setToken(() => res);
+    setToken(() => res.token);
   }
 
   /**
@@ -115,7 +116,6 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Navigation
-            username={userInfo.username}
             handleLogout={handleLogout}
           />
 

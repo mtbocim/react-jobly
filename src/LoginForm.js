@@ -34,7 +34,14 @@ function LoginForm({ onSubmit }) {
             [name]: value,
         }));
     }
-    //TODO: document what is happening here
+
+    /**
+     *  Function called upon login form submission
+     *  calls the callback function onSubmit given as prop
+     *  within a try catch block, upon success, navigate home '/'
+     *  If an error is thrown, catch it and display errors.
+     */
+    
     async function handleSubmit(evt) {
         evt.preventDefault();
         try {

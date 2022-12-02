@@ -34,7 +34,7 @@ function LoginForm({ onSubmit }) {
             [name]: value,
         }));
     }
-
+    //TODO: document what is happening here
     async function handleSubmit(evt) {
         evt.preventDefault();
         try {

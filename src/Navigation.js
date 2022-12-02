@@ -14,7 +14,7 @@ import "./Navigation.css";
 
 function Navigation({ username, handleLogout }) {
     const isLoggedIn = username !== undefined;
-
+    //TODO: get username out of context
     return (
         <nav className="Navigation">
             <div className="Navigation-homepage-link">

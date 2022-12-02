@@ -32,15 +32,19 @@ import JoblyApi from './JoblyAPI.js';
 
 function App() {
   const [userInfo, setUserInfo] = useState({});
+  //TODO: Keep data type the same!
   const [loginInfo, setLoginInfo] = useState("");
 
   //console.log("App has rendered with states", "userInfo=", userInfo,
   //  "token=", loginInfo);
 
+  //TODO: document what is happening
   useEffect(function handleChangeOfUser() {
     async function fetchUserInfo() {
       //console.log("YOU GOT HERE");
-      //TODO: handle logged out user state
+      
+      //TODO: explicit if statement
+      //TODO: try catch any API call
 
       const resUser = loginInfo.token !== undefined
         ? await JoblyApi.getUserInfo(loginInfo.username)
@@ -52,7 +56,7 @@ function App() {
   }, [loginInfo]);
 
 
-
+  //TODO: docstring helpers
   async function handleLogin(formData) {
     const res = await JoblyApi.loginUser(formData);
     //console.log("res is >>>>>", res);

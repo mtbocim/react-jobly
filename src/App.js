@@ -5,6 +5,7 @@ import RoutesList from './RoutesList';
 import { BrowserRouter } from 'react-router-dom';
 import Navigation from "./Navigation.js";
 import JoblyApi from './JoblyAPI.js';
+import jwt_decode from "jwt-decode";
 
 /**
  * Renders the base App component.
@@ -18,12 +19,8 @@ import JoblyApi from './JoblyAPI.js';
  *            isAdmin,
  *            applications:[]
  *          }
- * 
- *         loginInfo:
- *            {
- *              token:
- *              username:
- *            }
+ *
+ *         token (str)
  *
  * Props: none
  *
@@ -32,42 +29,70 @@ import JoblyApi from './JoblyAPI.js';
 
 function App() {
   const [userInfo, setUserInfo] = useState({});
-  //TODO: Keep data type the same!
-  const [loginInfo, setLoginInfo] = useState("");
+  const [token, setToken] = useState("");
 
-  //console.log("App has rendered with states", "userInfo=", userInfo,
-  //  "token=", loginInfo);
 
-  //TODO: document what is happening
+  /**
+   * Every time the token state changes, function runs.
+   * If token is not the empty string, an API call will be made and userInfo
+   * will be updated.
+   * If the token is the empty string, userInfo will be set to empty object.
+   */
+
   useEffect(function handleChangeOfUser() {
     async function fetchUserInfo() {
-      //console.log("YOU GOT HERE");
-      
-      //TODO: explicit if statement
-      //TODO: try catch any API call
 
-      const resUser = loginInfo.token !== undefined
-        ? await JoblyApi.getUserInfo(loginInfo.username)
-        : { user: {} };
-      setUserInfo(() => resUser.user);
-      console.log("hallelujah");
+      if (token !== "") {
+        const tokenDecoded = jwt_decode(token);
+        const { username } = tokenDecoded;
+        console.log("TEST decoded token is>>>>", tokenDecoded);
+
+        try {
+          const res = await JoblyApi.getUserInfo(username);
+          setUserInfo(() => res.user);
+        } catch (err) {
+          console.error("API Error:", err.response);
+          let message = err.response.data.error.message;
+          throw Array.isArray(message) ? message : [message];
+        }
+      } else if (token === "") {
+        setUserInfo(() => { });
+      }
+
+      console.log("hallelujah, useEffect has been invoked");
     }
+
     fetchUserInfo();
-  }, [loginInfo]);
+  }, [token]);
 
 
-  //TODO: docstring helpers
+  /**
+   *  Function called when login form submitted.
+   *  Call static methods on JoblyApi
+   *  Sets token state.
+   */
+
   async function handleLogin(formData) {
     const res = await JoblyApi.loginUser(formData);
-    //console.log("res is >>>>>", res);
-    setLoginInfo(() => ({ token: res, username: formData.username }));
+    setToken(() => res);
   }
+
+  /**
+   * Function called when Signup form is submitted.
+   * Calls static method on JoblyApi.
+   * Sets token state.
+   */
 
   async function handleSignup(formData) {
     const res = await JoblyApi.registerNewUser(formData);
-    //console.log("res is >>>>>>>", res);
-    setLoginInfo(() => ({ token: res, username: formData.username }));
+    setToken(() => res);
   }
+
+  /**
+   *  Function called when ProfileEdit form is submitted.
+   *  Function calls JoblyApi static method to update user information.
+   *  TODO: finish this
+   */
 
   async function handleProfileEdit(formData) {
     const { firstName, lastName, email, username } = formData;
@@ -76,17 +101,22 @@ function App() {
     setUserInfo(userInfo => ({ ...userInfo, ...res.user }));
   }
 
+  /**
+   *  Function called when Logout button is clicked.
+   *  Function sets the token state to the empty string.
+   */
+
   function handleLogout() {
-    setLoginInfo({})
+    setToken("");
   }
 
   return (
     <userContext.Provider value={userInfo}>
       <div className="App">
         <BrowserRouter>
-          <Navigation 
-            username={userInfo.username} 
-            handleLogout={handleLogout} 
+          <Navigation
+            username={userInfo.username}
+            handleLogout={handleLogout}
           />
 
           <RoutesList

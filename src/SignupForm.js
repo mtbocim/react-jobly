@@ -1,5 +1,6 @@
 import {useContext, useState} from 'react';
 import userContext from './userContext';
+import AlertMsg from './AlertMsg';
 
 /**
  * Render a Profile component.
@@ -27,6 +28,9 @@ function SignupForm({onSubmit}){
       password: ""
     });
 
+    const [errors, setErrors] = useState([]);
+
+
     function handleChange(evt){
         const { name, value } = evt.target;
         setFormData((fData) => ({
@@ -35,9 +39,21 @@ function SignupForm({onSubmit}){
         }));
     }
 
-    function handleSubmit(evt){
+    /**
+     *  Function handles submission of the form.
+     *  Calls onSubmit callback fn given as prop
+     *  If onSubmit throws an error, it will be displayed on the form
+     */
+    async function handleSubmit(evt){
         evt.preventDefault();
-        onSubmit(formData);
+        try {
+          const result = await onSubmit(formData);
+          console.log("success, result is", result);
+        }
+        catch(errorMessages) {
+          console.log("err>>>>>>>>>>>>", errorMessages);
+          setErrors(() => errorMessages);
+        }
     }
 
     return(
@@ -93,15 +109,8 @@ function SignupForm({onSubmit}){
                     />
                 </label>
 
-                <label>
-                    Retype Password:
-                    <input
-                        type="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        name="password"
-                    />
-                </label>
+                <AlertMsg msgs={errors} />
+                <button>Sign Up</button>
             </form>
         </div>
     )

@@ -2,14 +2,14 @@ import { useContext, useState, useEffect } from 'react';
 import userContext from "./userContext.js";
 import './App.css';
 import RoutesList from './RoutesList';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Navigate } from 'react-router-dom';
 import Navigation from "./Navigation.js";
 import JoblyApi from './JoblyAPI.js';
 
 /**
  * Renders the base App component.
  *
- * State: userInfo
+ * State: userInfo, token
  *
  * Props: none
  *
@@ -20,40 +20,33 @@ function App() {
   const [userInfo, setUserInfo] = useState({});
   const [token, setToken] = useState("");
 
-  console.log("userToken>>>>>>>", userInfo);
-  console.log("token>>>>>>>>>>>>>>", token);
+  console.log("App has rendered with states", "userInfo=", userInfo,
+                "token=", token);
 
-  // useEffect(function why() {
-  //     async function getCompaniesData() {
+  useEffect(function handleChangeOfUser() {
+    async function fetchUserInfo() {
+      console.log("YOU GOT HERE");
+      const resUser = await JoblyApi.getUserInfo(userInfo.username);
+      setUserInfo(()=> resUser.user);
+      console.log("hallelujah");
+    }
+    fetchUserInfo();
+  }, [token, userInfo]);
 
-  //     }
-  //     setCompaniesPage(companiesData => (
-  //         {
-  //             ...companiesData,
-  //             isLoading: true,
-  //         }
-  //     ));
-  //     getCompaniesData();
-  // }, [token]);
 
-  //useEffect....
-
-  // }, [loginAttempt]);
 
   async function handleLogin(formData) {
-    //console.log("loginForm data", formData);
-    try {
-      const res = await JoblyApi.loginUser(formData);
-      console.log(res);
-    } catch (errs) {
-      return errs
-    }
+    const res = await JoblyApi.loginUser(formData);
+    console.log("res is >>>>>", res);
+    setToken(() => res);
+    setUserInfo(u => ({...u, username: formData.username}));
   }
 
-
-
-  function handleSignup(formData) {
-
+  async function handleSignup(formData) {
+    const res = await JoblyApi.registerNewUser(formData);
+    console.log("res is >>>>>>>", res);
+    setToken(() => res);
+    setUserInfo(u => ({...u, username: formData.username}));
   }
 
   function handleProfileEdit(formData) {
@@ -63,7 +56,6 @@ function App() {
   function handleLogout() {
 
   }
-
 
   return (
     <userContext.Provider value={userInfo}>

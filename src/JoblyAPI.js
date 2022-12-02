@@ -86,7 +86,7 @@ class JoblyApi {
   //  *
   //  * Returns JWT token which can be used to authenticate further requests.
   static async registerNewUser(newUserData) {
-    let res = await this.request('/auth/register', { newUserData });
+    let res = await this.request('auth/register', newUserData, 'POST');
     this.token = res.token;
     return res.token;
   }
@@ -97,6 +97,11 @@ class JoblyApi {
   static async loginUser(loginData) {
     let res = await this.request('auth/token', loginData, 'POST');
     this.token = res.token;
+    return res;
+  }
+
+  static async getUserInfo(username) {
+    let res = await this.request(`users/${username}`);
     return res;
   }
 

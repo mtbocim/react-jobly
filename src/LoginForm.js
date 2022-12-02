@@ -1,6 +1,8 @@
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import userContext from './userContext';
 import AlertMsg from './AlertMsg';
+
 
 /**
  * Render a Profile component.
@@ -25,8 +27,7 @@ function LoginForm({ onSubmit }) {
         password: ""
     });
     const [errors, setErrors] = useState([]);
-
-    //console.log("login formData", formData);
+    const navigate = useNavigate();
 
     function handleChange(evt) {
         const { name, value } = evt.target;
@@ -38,9 +39,15 @@ function LoginForm({ onSubmit }) {
 
     async function handleSubmit(evt) {
         evt.preventDefault();
-        const result = await onSubmit(formData);
-        //console.log("errors =", result)
-        setErrors(()=>result);
+        try {
+          const result = await onSubmit(formData);
+          navigate('/');
+          console.log("success, result is", result);
+        }
+        catch(errorMessages) {
+          console.log("err>>>>>>>>>>>>", errorMessages);
+          setErrors(() => errorMessages);
+        }
     }
 
 

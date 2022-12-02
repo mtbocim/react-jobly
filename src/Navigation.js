@@ -1,6 +1,7 @@
-import { React } from "react";
+import { React, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import "./Navigation.css";
+import userContext from "./userContext";
 
 /**
  * Renders a Navigation component
@@ -12,9 +13,10 @@ import "./Navigation.css";
  * App -> Navigation
  */
 
-function Navigation({ username, handleLogout }) {
+function Navigation({ handleLogout }) {
+    const { username } = useContext(userContext);
     const isLoggedIn = username !== undefined;
-    //TODO: get username out of context
+
     return (
         <nav className="Navigation">
             <div className="Navigation-homepage-link">

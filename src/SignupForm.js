@@ -1,4 +1,5 @@
 import {useContext, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import userContext from './userContext';
 import AlertMsg from './AlertMsg';
 
@@ -7,10 +8,11 @@ import AlertMsg from './AlertMsg';
  *
  * State: formData
  *          {
- *              username, (cannot edit)
+ *              username,
  *              firstName,
  *              lastName,
- *              email.
+ *              email,
+ *              password
  *          }
  *
  * Props: handleSubmit
@@ -29,7 +31,7 @@ function SignupForm({onSubmit}){
     });
 
     const [errors, setErrors] = useState([]);
-
+    const navigate = useNavigate();
 
     function handleChange(evt){
         const { name, value } = evt.target;
@@ -48,6 +50,7 @@ function SignupForm({onSubmit}){
         evt.preventDefault();
         try {
           const result = await onSubmit(formData);
+          navigate('/');
           console.log("success, result is", result);
         }
         catch(errorMessages) {

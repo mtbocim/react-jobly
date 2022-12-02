@@ -1,5 +1,7 @@
 import {useContext, useState} from 'react';
 import userContext from './userContext';
+import {useNavigate} from 'react-router-dom';
+import AlertMsg from './AlertMsg';
 
 /**
  * Render a Profile component.
@@ -21,7 +23,10 @@ import userContext from './userContext';
 function ProfileForm({onSubmit}){
     const userData = useContext(userContext);
     const [formData, setFormData] = useState(userData);
-
+    const [errors, setErrors] = useState([]);
+    
+    const navigate = useNavigate();
+    
     function handleChange(evt){
         const { name, value } = evt.target;
         setFormData((fData) => ({
@@ -30,9 +35,19 @@ function ProfileForm({onSubmit}){
         }));
     }
 
-    function handleSubmit(evt){
+
+
+    async function handleSubmit(evt){
         evt.preventDefault();
-        onSubmit(formData);
+        try {
+          const result = await onSubmit(formData);
+          navigate('/');
+          console.log("success, result is", result);
+        }
+        catch(errorMessages) {
+          console.log("err>>>>>>>>>>>>", errorMessages);
+          setErrors(() => errorMessages);
+        }
     }
 
     return(
@@ -43,7 +58,7 @@ function ProfileForm({onSubmit}){
                     <input
                         type="text"
                         value={formData.username}
-                        disabled="true"
+                        disabled={true}
                         name="username"
                     />
                 </label>
@@ -77,6 +92,8 @@ function ProfileForm({onSubmit}){
                         name="email"
                     />
                 </label>
+                <AlertMsg msgs={errors} />
+                <button>Update</button>
             </form>
         </div>
     )

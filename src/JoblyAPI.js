@@ -49,6 +49,7 @@ class JoblyApi {
 
   /**Get a list of all companies */
   static async getCompanies() {
+    //console.log(this.token);
     let res = await this.request(`companies`);
     return res.companies;
   }
@@ -105,6 +106,10 @@ class JoblyApi {
     return res;
   }
 
+  static async updateUserInfo(username, formData){
+    let res = await this.request(`users/${username}`, formData, 'PATCH');
+    return res; 
+  }
 
 
 }

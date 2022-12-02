@@ -10,6 +10,7 @@ import JoblyApi from './JoblyAPI.js';
  * Renders the base App component.
  *
  * State: userInfo, token
+ * TODO: descriptions of these states
  *
  * Props: none
  *
@@ -18,39 +19,43 @@ import JoblyApi from './JoblyAPI.js';
 
 function App() {
   const [userInfo, setUserInfo] = useState({});
-  const [token, setToken] = useState("");
-
-  console.log("App has rendered with states", "userInfo=", userInfo,
-                "token=", token);
+  const [loginInfo, setLoginInfo] = useState("");
+  
+  const {username, firstName, lastName, email} = userInfo
+  //console.log("App has rendered with states", "userInfo=", userInfo,
+  //  "token=", loginInfo);
 
   useEffect(function handleChangeOfUser() {
     async function fetchUserInfo() {
-      console.log("YOU GOT HERE");
-      const resUser = await JoblyApi.getUserInfo(userInfo.username);
-      setUserInfo(()=> resUser.user);
+      //console.log("YOU GOT HERE");
+      //TODO: handle logged out user state
+
+      const resUser = await JoblyApi.getUserInfo(loginInfo.username);
+      setUserInfo(() => resUser.user);
       console.log("hallelujah");
     }
     fetchUserInfo();
-  }, [token, userInfo]);
+  }, [loginInfo]);
 
 
 
   async function handleLogin(formData) {
     const res = await JoblyApi.loginUser(formData);
-    console.log("res is >>>>>", res);
-    setToken(() => res);
-    setUserInfo(u => ({...u, username: formData.username}));
+    //console.log("res is >>>>>", res);
+    setLoginInfo(() => ({ token: res, username: formData.username }));
   }
 
   async function handleSignup(formData) {
     const res = await JoblyApi.registerNewUser(formData);
-    console.log("res is >>>>>>>", res);
-    setToken(() => res);
-    setUserInfo(u => ({...u, username: formData.username}));
+    //console.log("res is >>>>>>>", res);
+    setLoginInfo(() => ({ token: res, username: formData.username }));
   }
 
-  function handleProfileEdit(formData) {
-
+  async function handleProfileEdit(formData) {
+    //console.log("What is handleProfileEdit formData",formData);
+    const {firstName, lastName, email, username} = formData
+    const res = await JoblyApi.updateUserInfo(username, {firstName, lastName, email});
+    setUserInfo(userInfo=>({...userInfo, ...formData}));
   }
 
   function handleLogout() {
@@ -58,7 +63,7 @@ function App() {
   }
 
   return (
-    <userContext.Provider value={userInfo}>
+    <userContext.Provider value={{username, firstName, lastName, email}}>
       <div className="App">
         <BrowserRouter>
           <Navigation userInfo={userInfo} />

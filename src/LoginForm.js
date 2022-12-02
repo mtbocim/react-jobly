@@ -9,10 +9,8 @@ import AlertMsg from './AlertMsg';
  *
  * State: formData
  *          {
- *              username, (cannot edit)
- *              firstName,
- *              lastName,
- *              email.
+ *              username,
+ *              password
  *          }
  *
  * Props: handleSubmit

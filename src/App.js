@@ -31,6 +31,8 @@ function App() {
   const [userInfo, setUserInfo] = useState({});
   const [token, setToken] = useState(localStorage.getItem("token"))
 
+  console.log("userInfo>>>>>>>>>>>", userInfo);
+  console.log("token>>>>>>>>>", token);
   /**
    * Every time the token state changes, function runs.
    * If token is not null, an API call will be made and userInfo
@@ -42,6 +44,7 @@ function App() {
       console.log("useEffect invoked, token is", token);
       JoblyApi.token = token;
       if (token !== null) {
+        localStorage.setItem("token", token);
         console.log("there is a token, we got here");
         const tokenDecoded = jwt_decode(token);
         console.log("TEST decoded token is>>>>", tokenDecoded);
@@ -57,6 +60,7 @@ function App() {
           window.alert("Login failed, please try again");
         }
       } else if (token === null) {
+        localStorage.removeItem("token");
         setUserInfo({});
       }
 
@@ -75,8 +79,10 @@ function App() {
 
   async function handleLogin(formData) {
     const res = await JoblyApi.loginUser(formData);
-    localStorage.setItem("token", res.token);
-    setToken(localStorage.getItem("token"));
+    //localStorage.setItem("token", res.token);
+    //setToken(localStorage.getItem("token"));
+    setToken(res.token);
+    //set token state to res.token
   }
 
   /**
@@ -87,8 +93,8 @@ function App() {
 
   async function handleSignup(formData) {
     const res = await JoblyApi.registerNewUser(formData);
-    localStorage.setItem("token", res.token);
-    setToken(localStorage.getItem("token"));
+    //localStorage.setItem("token", res.token);
+    setToken(res.token);
   }
 
   /**
@@ -96,8 +102,8 @@ function App() {
    *  Function calls JoblyApi static method to update user information.
    */
 
-  async function handleProfileEdit(formData) {
-    const { firstName, lastName, email, username } = formData;
+  async function handleProfileEdit({ firstName, lastName, email, username }) {
+    //const { firstName, lastName, email, username } = formData;
     const res = await JoblyApi.updateUserInfo(username, { firstName, lastName, email });
     //console.log("What is handleProfileEdit formData",formData, res);
     setUserInfo(userInfo => ({ ...userInfo, ...res.user }));
@@ -105,12 +111,16 @@ function App() {
 
   /**
    *  Function called when Logout button is clicked.
-   *  Function sets the token state to the empty string.
+   *  Function sets the token state to the null.
    */
 
   function handleLogout() {
-    localStorage.removeItem("token");
-    setToken(localStorage.getItem("token"));
+    //localStorage.removeItem("token");
+    setToken(null);
+  }
+
+  if (userInfo.username === undefined && token !== null) {
+    return <h1>Loading!</h1>
   }
 
   return (

@@ -6,7 +6,8 @@ import Homepage from "./Homepage.js";
 import ProfileForm from "./ProfileForm.js";
 import LoginForm from "./LoginForm.js";
 import SignupForm from "./SignupForm.js";
-
+import userContext from "./userContext.js";
+import { useContext } from "react";
 /**
  * Renders a RoutesList component.
  *
@@ -16,14 +17,17 @@ import SignupForm from "./SignupForm.js";
  * App -> RoutesList
  * 
  * Accessible routes determined by data in localstorage("token")
+ * 
+ * TODO: context use
  */
 
 function RoutesList({ handleLogin, handleSignup, handleProfileEdit }) {
-    const token = localStorage.getItem("token");
-
+    //const token = localStorage.getItem("token");
+    const { username } = useContext(userContext);
+    const isLoggedIn = username !== undefined;
     return (
         <div className="RoutesList">
-            {token !== null
+            {isLoggedIn
                 ?
                 <Routes>
                     <Route path="/companies/:handle" element={<CompanyDetail />} />

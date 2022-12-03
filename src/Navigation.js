@@ -10,6 +10,8 @@ import userContext from "./userContext";
  * Props: handleLogout: logout callback function
  *
  * App -> Navigation
+ * 
+ * consuming userContext: username
  */
 
 function Navigation({ handleLogout }) {
@@ -23,7 +25,8 @@ function Navigation({ handleLogout }) {
             </div>
             {
                 isLoggedIn
-                    ? <div className="Navigation-data-links">
+                    ?
+                    <div className="Navigation-data-links">
                         <NavLink to="/jobs">Jobs</NavLink>
                         <NavLink to="/companies">Companies</NavLink>
                         <NavLink to="/profile">Profile</NavLink>
@@ -34,7 +37,8 @@ function Navigation({ handleLogout }) {
                             Logout {username}
                         </NavLink>
                     </div>
-                    : <div className="Navigation-data-links">
+                    :
+                    <div className="Navigation-data-links">
                         <NavLink to="/login">Login</NavLink>
                         <NavLink to="/signup">Signup</NavLink>
                     </div>

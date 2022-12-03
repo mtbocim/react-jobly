@@ -14,18 +14,21 @@ import AlertMsg from './AlertMsg';
  *              email.
  *          }
  *
- * Props: handleSubmit
+ * Props: onSubmit
  *
  * App -> RoutesList -> Profile
  *
+ * TODO: use of context
  */
 
 function ProfileForm({onSubmit}){
     const userData = useContext(userContext);
     //console.log("ProfileForm userData", userData);
+    
+    //TODO: get the specific pieces of data we're using
     const [formData, setFormData] = useState(userData);
     const [errors, setErrors] = useState([]);
-    
+    console.log("formData>>>>>>>>>>", formData);
     const navigate = useNavigate();
     
     function handleChange(evt){

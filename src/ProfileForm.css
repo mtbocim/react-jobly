@@ -1,0 +1,8 @@
+.ProfileForm label{
+    display: block;
+    margin: 10px;
+}
+
+.ProfileForm input{
+    margin-left: 5px;
+}

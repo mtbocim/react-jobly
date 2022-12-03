@@ -2,6 +2,7 @@ import {useContext, useState} from 'react';
 import userContext from './userContext';
 import {useNavigate} from 'react-router-dom';
 import AlertMsg from './AlertMsg';
+import './ProfileForm.css';
 
 /**
  * Render a Profile component.
@@ -18,17 +19,16 @@ import AlertMsg from './AlertMsg';
  *
  * App -> RoutesList -> Profile
  *
- * TODO: use of context
+ * userContext consumed: userName, firstName, lastName, email
  */
 
 function ProfileForm({onSubmit}){
-    const userData = useContext(userContext);
+    const {username, firstName, lastName, email} = useContext(userContext);
     //console.log("ProfileForm userData", userData);
     
-    //TODO: get the specific pieces of data we're using
-    const [formData, setFormData] = useState(userData);
+    const [formData, setFormData] = useState({username, firstName, lastName, email});
     const [errors, setErrors] = useState([]);
-    console.log("formData>>>>>>>>>>", formData);
+    //console.log("formData>>>>>>>>>>", formData);
     const navigate = useNavigate();
     
     function handleChange(evt){
@@ -49,7 +49,7 @@ function ProfileForm({onSubmit}){
           console.log("success, result is", result);
         }
         catch(errorMessages) {
-          console.log("err>>>>>>>>>>>>", errorMessages);
+          //console.log("err>>>>>>>>>>>>", errorMessages);
           setErrors(() => errorMessages);
         }
     }
@@ -58,7 +58,7 @@ function ProfileForm({onSubmit}){
         <div className='ProfileForm'>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Username:
+                    Username: 
                     <input
                         type="text"
                         value={formData.username}
@@ -68,7 +68,7 @@ function ProfileForm({onSubmit}){
                 </label>
 
                 <label>
-                    First name:
+                    First name: 
                     <input
                         type="text"
                         value={formData.firstName}
@@ -78,7 +78,7 @@ function ProfileForm({onSubmit}){
                 </label>
 
                 <label>
-                    Last name:
+                    Last name: 
                     <input
                         type="text"
                         value={formData.lastName}
@@ -88,7 +88,7 @@ function ProfileForm({onSubmit}){
                 </label>
 
                 <label>
-                    Email:
+                    Email: 
                     <input
                         type="text"
                         value={formData.email}

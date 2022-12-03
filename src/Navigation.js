@@ -33,6 +33,7 @@ function Navigation({ handleLogout }) {
                         <NavLink
                             to="/logout"
                             onClick={handleLogout}
+                            className="Navigation-data-links-logout"
                         >
                             Logout {username}
                         </NavLink>

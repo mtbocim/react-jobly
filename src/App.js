@@ -41,13 +41,13 @@ function App() {
    */
   useEffect(function handleChangeOfUser() {
     async function fetchUserInfo() {
-      console.log("useEffect invoked, token is", token);
+      //console.log("useEffect invoked, token is", token);
       JoblyApi.token = token;
       if (token !== null) {
         localStorage.setItem("token", token);
-        console.log("there is a token, we got here");
+        //console.log("there is a token, we got here");
         const tokenDecoded = jwt_decode(token);
-        console.log("TEST decoded token is>>>>", tokenDecoded);
+        //console.log("TEST decoded token is>>>>", tokenDecoded);
         const { username } = tokenDecoded;
 
         try {
@@ -79,10 +79,7 @@ function App() {
 
   async function handleLogin(formData) {
     const res = await JoblyApi.loginUser(formData);
-    //localStorage.setItem("token", res.token);
-    //setToken(localStorage.getItem("token"));
     setToken(res.token);
-    //set token state to res.token
   }
 
   /**
@@ -93,7 +90,6 @@ function App() {
 
   async function handleSignup(formData) {
     const res = await JoblyApi.registerNewUser(formData);
-    //localStorage.setItem("token", res.token);
     setToken(res.token);
   }
 
@@ -103,7 +99,6 @@ function App() {
    */
 
   async function handleProfileEdit({ firstName, lastName, email, username }) {
-    //const { firstName, lastName, email, username } = formData;
     const res = await JoblyApi.updateUserInfo(username, { firstName, lastName, email });
     //console.log("What is handleProfileEdit formData",formData, res);
     setUserInfo(userInfo => ({ ...userInfo, ...res.user }));
@@ -115,7 +110,7 @@ function App() {
    */
 
   function handleLogout() {
-    //localStorage.removeItem("token");
+    
     setToken(null);
   }
 

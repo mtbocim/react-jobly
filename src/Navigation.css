@@ -2,6 +2,9 @@
     height: 40px;
     margin-top: 15px;
     margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    background-color: burlywood;
 }
 
 .Navigation-homepage-link{
@@ -9,7 +12,8 @@
 }
 
 .Navigation-data-links{
-    width: 250px;
+    margin-right: 25px;
+    justify-content: flex-end;
 }
 .active{
     font-weight: bold;
@@ -19,17 +23,16 @@
 .Navigation-homepage-link{
     display: inline;
     margin-left:0px;
-    margin-right:500px;
 }
 
-.Navigation-data-links{
-    display: inline;
-    margin-right:0px;
-}
+
 
 .Navigation a{
-    margin:20px;
+    margin:10px;
     text-decoration: none;
     font-size: 20px;
-    
+}
+
+.Navigation-data-links-logout{
+    max-width: 10px;
 }

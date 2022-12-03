@@ -11,17 +11,16 @@ import { useState } from "react";
 
 function SearchForm({ onSubmit }) {
     const [value, setValue] = useState('');
-    console.log("what is value>>>>>>>>>", value)
+    //console.log("what is value>>>>>>>>>", value)
     function handleChange(evt) {
         const { value } = evt.target;
         setValue(value);
     }
 
     function handleSubmit(evt) {
-        console.log("Handle submit triggered");
+        //console.log("Handle submit triggered");
         evt.preventDefault();
-        //TODO: trim value
-        onSubmit(value);
+        onSubmit(value.trim());
     }
 
     return (

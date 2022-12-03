@@ -18,11 +18,10 @@ import { useContext } from "react";
  * 
  * Accessible routes determined by data in localstorage("token")
  * 
- * TODO: context use
+ * userContext consumed: username
  */
 
 function RoutesList({ handleLogin, handleSignup, handleProfileEdit }) {
-    //const token = localStorage.getItem("token");
     const { username } = useContext(userContext);
     const isLoggedIn = username !== undefined;
     return (

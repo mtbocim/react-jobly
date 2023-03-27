@@ -33,6 +33,11 @@ class JoblyApi {
       return (await axios({ url, method, data, params, headers })).data;
     } catch (err) {
       console.error("API Error:", err.response);
+      if(err.response.data?.error===undefined){
+         err.response.data={error:{message:"Unable to connect to server"}}
+        
+      }
+      console.log("updated", err.response)
       let message = err.response.data.error.message;
       throw Array.isArray(message) ? message : [message];
     }

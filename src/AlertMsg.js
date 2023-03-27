@@ -8,7 +8,8 @@
  */
 
 function AlertMsg({ msgs }) {
-    return (
+   console.log("what is msg in alert?", msgs) 
+   return (
         <div className="AlertMsg">
             {msgs.map((msg, idx) =>
                 <div
